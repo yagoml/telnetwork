@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.scss'
 import Poles from './views/Poles'
+import Home from './views/Home'
 import Connections from './views/Connections'
 import { Container } from 'react-bootstrap'
 import {
@@ -15,6 +16,9 @@ function App() {
       <Container>
         <Router>
           <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
             <Route path="/poles">
               <Poles />
             </Route>

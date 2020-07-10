@@ -49,7 +49,7 @@ export default function Connections() {
 
   return (
     <div className="connections">
-      <h1>Ligações</h1>
+      <h2>Ligações</h2>
       {renderControls()}
       <ConnectionsTable openEditModal={openEditModal} />
       <ConnectionsModal show={show} close={close} connection={edition} />

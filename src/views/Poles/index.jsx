@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import PolesModal from '../../components/poles/PolesModal'
 import PolesTable from '../../components/poles/PolesTable'
+import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
+import { fetchConnections } from './../../store/ducks/connections/fetch-actions'
 
 export default function Poles() {
   const dispatch = useDispatch()
@@ -24,10 +25,6 @@ export default function Poles() {
     setShow(true)
   }
 
-  useEffect(() => {
-    dispatch(fetchPoles())
-  }, [dispatch])
-
   const renderControls = () => {
     return (
       <div className="d-flex align-items-center justify-content-between poles__controls mb-3">
@@ -45,9 +42,14 @@ export default function Poles() {
     )
   }
 
+  useEffect(() => {
+    dispatch(fetchPoles())
+    dispatch(fetchConnections())
+  }, [dispatch])
+
   return (
     <div className="poles">
-      <h1>Postes</h1>
+      <h2>Postes</h2>
       {renderControls()}
       <PolesTable openEditModal={openEditModal} />
       <PolesModal show={show} close={close} pole={edition} />

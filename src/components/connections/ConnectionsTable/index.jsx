@@ -46,18 +46,18 @@ export default function ConnectionsTable({ openEditModal }) {
                 <td>{connection.distancia.toLocaleString('pt-BR')}</td>
                 <td>
                   <Button
-                    onClick={() => tryDelete(connection.id)}
+                    onClick={() => openEditModal(connection)}
                     className="mr-2"
+                    title="Editar"
+                  >
+                    <PencilSquare color="white" size={20} />
+                  </Button>
+                  <Button
+                    onClick={() => tryDelete(connection.id)}
                     variant="danger"
                     title="Remover"
                   >
                     <Trash color="white" size={20} />
-                  </Button>
-                  <Button
-                    onClick={() => openEditModal(connection)}
-                    title="Editar"
-                  >
-                    <PencilSquare color="white" size={20} />
                   </Button>
                 </td>
               </tr>

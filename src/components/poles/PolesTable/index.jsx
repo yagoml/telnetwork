@@ -44,15 +44,18 @@ export default function PolesTable({ openEditModal }) {
                 <td></td>
                 <td>
                   <Button
-                    onClick={() => tryDelete(pole.id)}
+                    onClick={() => openEditModal(pole)}
                     className="mr-2"
+                    title="Editar"
+                  >
+                    <PencilSquare color="white" size={20} />
+                  </Button>
+                  <Button
+                    onClick={() => tryDelete(pole.id)}
                     variant="danger"
                     title="Remover"
                   >
                     <Trash color="white" size={20} />
-                  </Button>
-                  <Button onClick={() => openEditModal(pole)} title="Editar">
-                    <PencilSquare color="white" size={20} />
                   </Button>
                 </td>
               </tr>

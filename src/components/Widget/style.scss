@@ -1,0 +1,24 @@
+.widget {
+  border: 1px solid;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 110px;
+  color: white;
+  border-color: white;
+  background-color: slateblue;
+
+  &__value {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: yellow;
+    border-color: yellow;
+  }
+}
