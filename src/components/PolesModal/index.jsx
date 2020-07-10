@@ -19,15 +19,15 @@ export default function PolesModal({ show, close, pole }) {
   }, [setForm, pole])
 
   const save = () => {
-    if (!pole) dispatch(addPole(form))
-    else dispatch(editPole(pole.id, form))
+    const action = !pole ? addPole(form) : editPole(pole.id, form)
+    dispatch(action)
     close()
   }
 
   return (
     <Modal show={show} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Adicionar Poste</Modal.Title>
+        <Modal.Title>{!pole ? 'Adicionar' : 'Editar'} Poste</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

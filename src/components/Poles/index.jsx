@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './style.scss'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPoles, deletePole } from '../../store/fetch-actions'
@@ -45,7 +44,7 @@ export default function Poles() {
         </Button>
       </div>
       {poles.length > 0 && (
-        <Table hover responsive>
+        <Table hover responsive size="sm">
           <thead>
             <tr>
               <th>ID</th>
