@@ -38,9 +38,46 @@ export default function Poles() {
     dispatch(fetchPoles())
   }, [dispatch])
 
-  return (
-    <div className="poles">
-      <h1>Postes</h1>
+  const renderTable = () => {
+    if (loading || !poles.length) return
+    return (
+      <Table hover responsive size="sm">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Conexões</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {poles.map(pole => (
+            <tr key={pole.id}>
+              <td>{pole.id}</td>
+              <td>{pole.tipo}</td>
+              <td></td>
+              <td>
+                <Button
+                  onClick={() => tryDelete(pole.id)}
+                  className="mr-2"
+                  variant="danger"
+                  title="Remover"
+                >
+                  <Trash color="white" size={20} />
+                </Button>
+                <Button onClick={() => openEditModal(pole)} title="Editar">
+                  <PencilSquare color="white" size={20} />
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    )
+  }
+
+  const renderControls = () => {
+    return (
       <div className="d-flex align-items-center justify-content-between poles__controls mb-3">
         {!loading ? (
           <p>
@@ -53,45 +90,23 @@ export default function Poles() {
           Adicionar
         </Button>
       </div>
-      {!loading && poles.length > 0 && (
-        <Table hover responsive size="sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tipo</th>
-              <th>Conexões</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {poles.map(pole => (
-              <tr key={pole.id}>
-                <td>{pole.id}</td>
-                <td>{pole.tipo}</td>
-                <td></td>
-                <td>
-                  <Button
-                    onClick={() => tryDelete(pole.id)}
-                    className="mr-2"
-                    variant="danger"
-                    title="Remover"
-                  >
-                    <Trash color="white" size={20} />
-                  </Button>
-                  <Button onClick={() => openEditModal(pole)} title="Editar">
-                    <PencilSquare color="white" size={20} />
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-      {loading && (
-        <div className="poles__loading">
-          <Spinner animation="border" variant="primary" />
-        </div>
-      )}
+    )
+  }
+
+  const renderLoading = () => {
+    return (
+      <div className="poles__loading">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="poles">
+      <h1>Postes</h1>
+      {renderControls()}
+      {renderTable()}
+      {renderLoading()}
       <PolesModal show={show} close={close} pole={edition} />
     </div>
   )
