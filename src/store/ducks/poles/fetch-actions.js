@@ -1,7 +1,7 @@
 import api from '../../../services/api'
 import {
   loadingPoles, fetchPolesSuccess, fetchPolesFail,
-  poleAdded, poleEdited, poleRemoved } from '.'
+  poleAdded, poleEdited, poleRemoved } from './index'
 
 export const fetchPoles = () => {
   return async dispatch => {

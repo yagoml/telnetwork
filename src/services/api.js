@@ -8,8 +8,6 @@ const url = 'http://volare-teste-front.herokuapp.com/api'
 export default axios.create({
   baseURL: proxy + url,
   headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json;charset=utf-8',
-    'Access-Control-Allow-Origin': '*'
+    Authorization: `Bearer ${token}`
   }
 })

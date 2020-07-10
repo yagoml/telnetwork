@@ -5,6 +5,7 @@ import {
   fetchConnections,
   deleteConnection
 } from '../../store/ducks/connections/fetch-actions'
+import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
 import { Button, Spinner } from 'react-bootstrap'
 import ConnectionsModal from '../../components/ConnectionsModal'
 import './style.scss'
@@ -31,7 +32,7 @@ export default function Connections() {
 
   const tryDelete = id => {
     const confirmation = window.confirm(
-      `Deseja realmente remover o poste ${id}?`
+      `Deseja realmente remover a ligação ${id}?`
     )
     if (!confirmation) return
     dispatch(deleteConnection(id))
@@ -39,6 +40,7 @@ export default function Connections() {
 
   useEffect(() => {
     dispatch(fetchConnections())
+    dispatch(fetchPoles())
   }, [dispatch])
 
   const renderControls = () => {
