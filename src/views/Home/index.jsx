@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import './style.scss'
 import Widget from './../../components/Widget/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
@@ -40,7 +39,7 @@ export default function Home() {
           loading={loadingConnections}
         />
       </div>
-      <Link to="/routes">
+      <Link to="/check-route">
         <Button>Consultar conectividade</Button>
       </Link>
     </div>

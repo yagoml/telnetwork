@@ -29,7 +29,7 @@ export const addConnection = (connection) => {
 export const editConnection = (oldId, connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.put(`/ligacoes/${oldId}/`, connection)
+      const {data} = await api.patch(`/ligacoes/${oldId}/`, connection)
       dispatch(connectionEdited({
         id: oldId,
         data

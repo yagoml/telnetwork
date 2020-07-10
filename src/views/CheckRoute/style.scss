@@ -1,0 +1,18 @@
+.check-route {
+  &__btn-search {
+    margin-top: 32px;
+  }
+
+  &__pole-tag {
+    padding: 5px 15px;
+    border: 1px solid slateblue;
+    background-color: slateblue;
+    color: white;
+    border-radius: 30px;
+    margin-bottom: 15px;
+  }
+
+  .alert {
+    width: fit-content;
+  }
+}

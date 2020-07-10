@@ -71,10 +71,6 @@ export default function ConnectionsModal({ show, close, connection }) {
     close()
   }
 
-  const sourceChanged = e => setForm({ ...form, origem: e.target.value })
-
-  const destinationChanged = e => setForm({ ...form, destino: e.target.value })
-
   return (
     <Modal show={show} onHide={close} className="connections-modal">
       <Modal.Header closeButton>
@@ -100,7 +96,7 @@ export default function ConnectionsModal({ show, close, connection }) {
                 <Form.Control
                   as="select"
                   value={form.origem}
-                  onChange={sourceChanged}
+                  onChange={e => setForm({ ...form, origem: e.target.value })}
                 >
                   <option>Selecione</option>
                   {sourceOptions}
@@ -125,7 +121,7 @@ export default function ConnectionsModal({ show, close, connection }) {
                 <Form.Control
                   as="select"
                   value={form.destino}
-                  onChange={destinationChanged}
+                  onChange={e => setForm({ ...form, destino: e.target.value })}
                 >
                   <option>Selecione</option>
                   {destinationOptions}
