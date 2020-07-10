@@ -1,7 +1,7 @@
-import api from '../../services/api'
+import api from '../../../services/api'
 import {
   loadingPoles, fetchPolesSuccess, fetchPolesFail,
-  poleAdded, poleEdited, poleRemoved } from '../ducks/poles'
+  poleAdded, poleEdited, poleRemoved } from '.'
 
 export const fetchPoles = () => {
   return async dispatch => {

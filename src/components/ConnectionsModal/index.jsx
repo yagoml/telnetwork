@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
-import { addPole, editPole } from '../../store/ducks/poles/fetch-actions'
+import { addPole, editPole } from '../../store/ducks/connections/fetch-actions'
 import { useDispatch } from 'react-redux'
 
 const emptyForm = {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPoles, deletePole } from '../../store/fetch-actions'
+import { fetchPoles, deletePole } from '../../store/ducks/poles/fetch-actions'
 import { Button, Spinner } from 'react-bootstrap'
 import PolesModal from '../PolesModal'
 import './style.scss'
