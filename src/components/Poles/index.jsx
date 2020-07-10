@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPoles, deletePole } from '../../store/fetch-actions'
-import { Button } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 import PolesModal from '../PolesModal'
+import './style.scss'
+import { Trash, PencilSquare } from 'react-bootstrap-icons'
 
 export default function Poles() {
   const dispatch = useDispatch()
   const poles = useSelector(state => state.poles.items)
+  const loading = useSelector(state => state.poles.loading)
   const [show, setShow] = useState(false)
   const [edition, setEdition] = useState(null)
 
@@ -38,12 +41,19 @@ export default function Poles() {
   return (
     <div className="poles">
       <h1>Postes</h1>
-      <div className="poles__controls mb-3">
+      <div className="d-flex align-items-center justify-content-between poles__controls mb-3">
+        {!loading ? (
+          <p>
+            <strong>{poles.length}</strong> postes cadastrados
+          </p>
+        ) : (
+          <p>Carregando Postes...</p>
+        )}
         <Button variant="primary" onClick={openAddModal}>
           Adicionar
         </Button>
       </div>
-      {poles.length > 0 && (
+      {!loading && poles.length > 0 && (
         <Table hover responsive size="sm">
           <thead>
             <tr>
@@ -64,15 +74,23 @@ export default function Poles() {
                     onClick={() => tryDelete(pole.id)}
                     className="mr-2"
                     variant="danger"
+                    title="Remover"
                   >
-                    Excluir
+                    <Trash color="white" size={20} />
                   </Button>
-                  <Button onClick={() => openEditModal(pole)}>Editar</Button>
+                  <Button onClick={() => openEditModal(pole)} title="Editar">
+                    <PencilSquare color="white" size={20} />
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+      )}
+      {loading && (
+        <div className="poles__loading">
+          <Spinner animation="border" variant="primary" />
+        </div>
       )}
       <PolesModal show={show} close={close} pole={edition} />
     </div>

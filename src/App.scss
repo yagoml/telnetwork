@@ -1,1 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
+
+.App {
+  min-height: 100vh;
+
+  td {
+    vertical-align: middle;
+  }
+}
