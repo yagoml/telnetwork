@@ -22,39 +22,46 @@ export default function ConnectionsModal({ show, close, connection }) {
   const dispatch = useDispatch()
   const poles = useSelector(state => state.poles.items)
 
-  const buildSourceOptions = () => {
-    if (!poles.length) return
-    const items = []
-    let filtered = poles
-    if (form.destino.length) filtered = poles.filter(p => p.id !== form.destino)
-    for (const pole of filtered) {
-      items.push(
-        <option value={pole.id} key={pole.id}>
-          {pole.id}
-        </option>
-      )
-    }
-    setSourceOptions(items)
-  }
-
-  const buildDestinationOptions = () => {
-    if (!poles.length) return
-    const items = []
-    let filtered = poles
-    if (form.origem.length) filtered = poles.filter(p => p.id !== form.origem)
-    for (const pole of filtered) {
-      items.push(
-        <option value={pole.id} key={pole.id}>
-          {pole.id}
-        </option>
-      )
-    }
-    setDestinationOptions(items)
-  }
-
   useEffect(() => {
     setForm(connection ? connection : emptyForm)
   }, [setForm, connection])
+
+  useEffect(() => {
+    const sourceOptions = () => {
+      if (!poles.length) return
+      const items = []
+      let filtered = poles
+      if (form.destino.length)
+        filtered = poles.filter(p => p.id !== form.destino)
+      for (const pole of filtered) {
+        items.push(
+          <option value={pole.id} key={pole.id}>
+            {pole.id}
+          </option>
+        )
+      }
+      return items
+    }
+    setSourceOptions(sourceOptions())
+  }, [form.destino, poles])
+
+  useEffect(() => {
+    const destinationOptions = () => {
+      if (!poles.length) return
+      const items = []
+      let filtered = poles
+      if (form.origem.length) filtered = poles.filter(p => p.id !== form.origem)
+      for (const pole of filtered) {
+        items.push(
+          <option value={pole.id} key={pole.id}>
+            {pole.id}
+          </option>
+        )
+      }
+      return items
+    }
+    setDestinationOptions(destinationOptions())
+  }, [form.origem, poles])
 
   const save = () => {
     const action = !connection
@@ -66,12 +73,12 @@ export default function ConnectionsModal({ show, close, connection }) {
 
   const sourceChanged = async e => {
     await setForm({ ...form, origem: e.target.value })
-    buildDestinationOptions()
+    // buildDestinationOptions()
   }
 
   const destinationChanged = e => {
     setForm({ ...form, destino: e.target.value })
-    buildSourceOptions()
+    // buildSourceOptions()
   }
 
   return (

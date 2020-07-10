@@ -6,9 +6,9 @@ const initialState = {
   error: false
 }
 
-export const loadingConnections = createAction('LOAD_POLES')
-export const fetchConnectionsSuccess = createAction('FETCH_POLES_SUCCESS')
-export const fetchConnectionsFail = createAction('FETCH_POLES_FAIL')
+export const loadingConnections = createAction('LOAD_CONNECTIONS')
+export const fetchConnectionsSuccess = createAction('FETCH_CONNECTIONS_SUCCESS')
+export const fetchConnectionsFail = createAction('FETCH_CONNECTIONS_FAIL')
 export const connectionAdded = createAction('POLE_ADDED')
 export const connectionEdited = createAction('POLE_EDITED')
 export const connectionRemoved = createAction('POLE_REMOVED')
