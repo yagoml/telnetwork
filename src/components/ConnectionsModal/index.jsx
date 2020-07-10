@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
-import { addPole, editPole } from '../../store/ducks/connections/fetch-actions'
+import {
+  addConnection,
+  editConnection
+} from '../../store/ducks/connections/fetch-actions'
 import { useDispatch } from 'react-redux'
 
 const emptyForm = {
@@ -9,7 +12,7 @@ const emptyForm = {
   tipo: ''
 }
 
-export default function PolesModal({ show, close, pole }) {
+export default function ConnectionsModal({ show, close, pole }) {
   const poleTypes = ['madeira', 'concreto']
   const [form, setForm] = useState(emptyForm)
   const dispatch = useDispatch()
@@ -19,7 +22,7 @@ export default function PolesModal({ show, close, pole }) {
   }, [setForm, pole])
 
   const save = () => {
-    const action = !pole ? addPole(form) : editPole(pole.id, form)
+    const action = !pole ? addConnection(form) : editConnection(pole.id, form)
     dispatch(action)
     close()
   }
@@ -69,7 +72,7 @@ export default function PolesModal({ show, close, pole }) {
   )
 }
 
-PolesModal.propTypes = {
+ConnectionsModal.propTypes = {
   show: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
   pole: PropTypes.object

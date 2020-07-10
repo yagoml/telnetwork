@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchPoles,
-  deletePole
-} from '../../store/ducks/connections/fetch-actions'
+import { fetchPoles, deletePole } from '../../store/ducks/poles/fetch-actions'
 import { Button, Spinner } from 'react-bootstrap'
-import ConnectionsModal from '../ConnectionsModal'
+import PolesModal from '../../components/PolesModal'
 import './style.scss'
 import { Trash, PencilSquare } from 'react-bootstrap-icons'
 
-export default function Connections() {
+export default function Poles() {
   const dispatch = useDispatch()
   const poles = useSelector(state => state.poles.items)
   const loading = useSelector(state => state.poles.loading)

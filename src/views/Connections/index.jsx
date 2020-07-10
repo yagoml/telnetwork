@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPoles, deletePole } from '../../store/ducks/poles/fetch-actions'
+import {
+  fetchConnections,
+  deleteConnection
+} from '../../store/ducks/connections/fetch-actions'
 import { Button, Spinner } from 'react-bootstrap'
-import PolesModal from '../PolesModal'
+import ConnectionsModal from '../../components/ConnectionsModal'
 import './style.scss'
 import { Trash, PencilSquare } from 'react-bootstrap-icons'
 
-export default function Poles() {
+export default function Connections() {
   const dispatch = useDispatch()
   const poles = useSelector(state => state.poles.items)
   const loading = useSelector(state => state.poles.loading)
@@ -31,11 +34,11 @@ export default function Poles() {
       `Deseja realmente remover o poste ${id}?`
     )
     if (!confirmation) return
-    dispatch(deletePole(id))
+    dispatch(deleteConnection(id))
   }
 
   useEffect(() => {
-    dispatch(fetchPoles())
+    dispatch(fetchConnections())
   }, [dispatch])
 
   return (
@@ -92,7 +95,7 @@ export default function Poles() {
           <Spinner animation="border" variant="primary" />
         </div>
       )}
-      <PolesModal show={show} close={close} pole={edition} />
+      <ConnectionsModal show={show} close={close} pole={edition} />
     </div>
   )
 }

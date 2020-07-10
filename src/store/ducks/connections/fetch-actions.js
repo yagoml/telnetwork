@@ -1,36 +1,36 @@
 import api from '../../../services/api'
 import {
-  loadingPoles, fetchPolesSuccess, fetchPolesFail,
-  poleAdded, poleEdited, poleRemoved } from '.'
+  loadingConnections, fetchConnectionsSuccess, fetchConnectionsFail,
+  connectionAdded, connectionEdited, connectionRemoved } from './index'
 
-export const fetchPoles = () => {
+export const fetchConnections = () => {
   return async dispatch => {
     try {
-      dispatch(loadingPoles())
+      dispatch(loadingConnections())
       const {data} = await api.get('/postes')
-      dispatch(fetchPolesSuccess(data))
+      dispatch(fetchConnectionsSuccess(data))
     } catch(e) {
-      dispatch(fetchPolesFail(e))
+      dispatch(fetchConnectionsFail(e))
     }
   }
 }
 
-export const addPole = (pole) => {
+export const addConnection = (connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.post('/postes/', pole)
-      dispatch(poleAdded(data))
+      const {data} = await api.post('/postes/', connection)
+      dispatch(connectionAdded(data))
     } catch(e) {
       console.error(e)
     }
   }
 }
 
-export const editPole = (oldId, pole) => {
+export const editConnection = (oldId, connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.put(`/postes/${oldId}/`, pole)
-      dispatch(poleEdited({
+      const {data} = await api.put(`/postes/${oldId}/`, connection)
+      dispatch(connectionEdited({
         id: oldId,
         data
       }))
@@ -40,11 +40,11 @@ export const editPole = (oldId, pole) => {
   }
 }
 
-export const deletePole = (id) => {
+export const deleteConnection = (id) => {
   return async dispatch => {
     try {
       await api.delete(`/postes/${id}/`)
-      dispatch(poleRemoved(id))
+      dispatch(connectionRemoved(id))
     } catch(e) {
       console.error(e)
     }
