@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPoles, deletePole } from '../../store/ducks/poles/fetch-actions'
-import { Button, Spinner } from 'react-bootstrap'
-import PolesModal from '../../components/PolesModal'
-import './style.scss'
-import { Trash, PencilSquare } from 'react-bootstrap-icons'
+import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
+import { Button } from 'react-bootstrap'
+import PolesModal from '../../components/poles/PolesModal'
+import PolesTable from '../../components/poles/PolesTable'
 
 export default function Poles() {
   const dispatch = useDispatch()
@@ -26,55 +24,9 @@ export default function Poles() {
     setShow(true)
   }
 
-  const tryDelete = id => {
-    const confirmation = window.confirm(
-      `Deseja realmente remover o poste ${id}?`
-    )
-    if (!confirmation) return
-    dispatch(deletePole(id))
-  }
-
   useEffect(() => {
     dispatch(fetchPoles())
   }, [dispatch])
-
-  const renderTable = () => {
-    if (loading || !poles.length) return
-    return (
-      <Table hover responsive size="sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tipo</th>
-            <th>Conexões</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {poles.map(pole => (
-            <tr key={pole.id}>
-              <td>{pole.id}</td>
-              <td>{pole.tipo}</td>
-              <td></td>
-              <td>
-                <Button
-                  onClick={() => tryDelete(pole.id)}
-                  className="mr-2"
-                  variant="danger"
-                  title="Remover"
-                >
-                  <Trash color="white" size={20} />
-                </Button>
-                <Button onClick={() => openEditModal(pole)} title="Editar">
-                  <PencilSquare color="white" size={20} />
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    )
-  }
 
   const renderControls = () => {
     return (
@@ -93,20 +45,11 @@ export default function Poles() {
     )
   }
 
-  const renderLoading = () => {
-    return (
-      <div className="poles__loading">
-        <Spinner animation="border" variant="primary" />
-      </div>
-    )
-  }
-
   return (
     <div className="poles">
       <h1>Postes</h1>
       {renderControls()}
-      {renderTable()}
-      {renderLoading()}
+      <PolesTable openEditModal={openEditModal} />
       <PolesModal show={show} close={close} pole={edition} />
     </div>
   )

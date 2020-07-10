@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {
   addConnection,
   editConnection
-} from '../../store/ducks/connections/fetch-actions'
+} from '../../../store/ducks/connections/fetch-actions'
 import { useDispatch } from 'react-redux'
 
 const emptyForm = {
@@ -24,7 +24,7 @@ export default function ConnectionsModal({ show, close, connection }) {
 
   useEffect(() => {
     setForm(connection ? connection : emptyForm)
-  }, [setForm, connection])
+  }, [connection])
 
   useEffect(() => {
     const sourceOptions = () => {
@@ -71,15 +71,9 @@ export default function ConnectionsModal({ show, close, connection }) {
     close()
   }
 
-  const sourceChanged = async e => {
-    await setForm({ ...form, origem: e.target.value })
-    // buildDestinationOptions()
-  }
+  const sourceChanged = e => setForm({ ...form, origem: e.target.value })
 
-  const destinationChanged = e => {
-    setForm({ ...form, destino: e.target.value })
-    // buildSourceOptions()
-  }
+  const destinationChanged = e => setForm({ ...form, destino: e.target.value })
 
   return (
     <Modal show={show} onHide={close} className="connections-modal">

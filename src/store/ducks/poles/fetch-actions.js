@@ -29,7 +29,7 @@ export const addPole = (pole) => {
 export const editPole = (oldId, pole) => {
   return async dispatch => {
     try {
-      const {data} = await api.put(`/postes/${oldId}/`, pole)
+      const {data} = await api.patch(`/postes/${oldId}/`, pole)
       dispatch(poleEdited({
         id: oldId,
         data
