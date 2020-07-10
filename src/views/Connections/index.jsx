@@ -12,8 +12,8 @@ import { Trash, PencilSquare } from 'react-bootstrap-icons'
 
 export default function Connections() {
   const dispatch = useDispatch()
-  const poles = useSelector(state => state.poles.items)
-  const loading = useSelector(state => state.poles.loading)
+  const connections = useSelector(state => state.connections.items)
+  const loading = useSelector(state => state.connections.loading)
   const [show, setShow] = useState(false)
   const [edition, setEdition] = useState(null)
 
@@ -24,8 +24,8 @@ export default function Connections() {
     setShow(true)
   }
 
-  const openEditModal = pole => {
-    setEdition(pole)
+  const openEditModal = connection => {
+    setEdition(connection)
     setShow(true)
   }
 
@@ -41,61 +41,82 @@ export default function Connections() {
     dispatch(fetchConnections())
   }, [dispatch])
 
-  return (
-    <div className="poles">
-      <h1>Postes</h1>
-      <div className="d-flex align-items-center justify-content-between poles__controls mb-3">
+  const renderControls = () => {
+    return (
+      <div className="d-flex align-items-center justify-content-between connections__controls mb-3">
         {!loading ? (
-          <p>
-            <strong>{poles.length}</strong> postes cadastrados
-          </p>
+          <div>
+            <strong>{connections.length}</strong> ligações cadastradas
+          </div>
         ) : (
-          <p>Carregando Postes...</p>
+          <p>Carregando Ligações...</p>
         )}
         <Button variant="primary" onClick={openAddModal}>
           Adicionar
         </Button>
       </div>
-      {!loading && poles.length > 0 && (
-        <Table hover responsive size="sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tipo</th>
-              <th>Conexões</th>
-              <th>Ações</th>
+    )
+  }
+
+  const renderTable = () => {
+    if (loading || !connections.length) return
+    return (
+      <Table hover responsive size="sm">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Distância</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {connections.map(connection => (
+            <tr key={connection.id}>
+              <td>{connection.id}</td>
+              <td>{connection.origem}</td>
+              <td>{connection.destino}</td>
+              <td>{connection.distancia}</td>
+              <td>
+                <Button
+                  onClick={() => tryDelete(connection.id)}
+                  className="mr-2"
+                  variant="danger"
+                  title="Remover"
+                >
+                  <Trash color="white" size={20} />
+                </Button>
+                <Button
+                  onClick={() => openEditModal(connection)}
+                  title="Editar"
+                >
+                  <PencilSquare color="white" size={20} />
+                </Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {poles.map(pole => (
-              <tr key={pole.id}>
-                <td>{pole.id}</td>
-                <td>{pole.tipo}</td>
-                <td></td>
-                <td>
-                  <Button
-                    onClick={() => tryDelete(pole.id)}
-                    className="mr-2"
-                    variant="danger"
-                    title="Remover"
-                  >
-                    <Trash color="white" size={20} />
-                  </Button>
-                  <Button onClick={() => openEditModal(pole)} title="Editar">
-                    <PencilSquare color="white" size={20} />
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-      {loading && (
-        <div className="poles__loading">
-          <Spinner animation="border" variant="primary" />
-        </div>
-      )}
-      <ConnectionsModal show={show} close={close} pole={edition} />
+          ))}
+        </tbody>
+      </Table>
+    )
+  }
+
+  const renderLoading = () => {
+    if (!loading) return
+    return (
+      <div className="connections__loading">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="connections">
+      <h1>Ligações</h1>
+      {renderControls()}
+      {renderTable()}
+      {renderLoading()}
+      <ConnectionsModal show={show} close={close} connection={edition} />
     </div>
   )
 }

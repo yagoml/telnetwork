@@ -7,7 +7,7 @@ export const fetchConnections = () => {
   return async dispatch => {
     try {
       dispatch(loadingConnections())
-      const {data} = await api.get('/postes')
+      const {data} = await api.get('/ligacoes')
       dispatch(fetchConnectionsSuccess(data))
     } catch(e) {
       dispatch(fetchConnectionsFail(e))
@@ -18,7 +18,7 @@ export const fetchConnections = () => {
 export const addConnection = (connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.post('/postes/', connection)
+      const {data} = await api.post('/ligacoes/', connection)
       dispatch(connectionAdded(data))
     } catch(e) {
       console.error(e)
@@ -29,7 +29,7 @@ export const addConnection = (connection) => {
 export const editConnection = (oldId, connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.put(`/postes/${oldId}/`, connection)
+      const {data} = await api.put(`/ligacoes/${oldId}/`, connection)
       dispatch(connectionEdited({
         id: oldId,
         data
@@ -43,7 +43,7 @@ export const editConnection = (oldId, connection) => {
 export const deleteConnection = (id) => {
   return async dispatch => {
     try {
-      await api.delete(`/postes/${id}/`)
+      await api.delete(`/ligacoes/${id}/`)
       dispatch(connectionRemoved(id))
     } catch(e) {
       console.error(e)
