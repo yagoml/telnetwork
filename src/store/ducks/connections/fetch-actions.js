@@ -1,4 +1,4 @@
-import api from '../../../services/api'
+import api, {tokenAuth} from '../../../services/api'
 import {
   loadingConnections, fetchConnectionsSuccess, fetchConnectionsFail,
   connectionAdded, connectionEdited, connectionRemoved } from './index'
@@ -7,7 +7,9 @@ export const fetchConnections = () => {
   return async dispatch => {
     try {
       dispatch(loadingConnections())
-      const {data} = await api.get('/ligacoes')
+      const {data} = await api.get('/ligacoes', {
+        headers: tokenAuth()
+      })
       dispatch(fetchConnectionsSuccess(data))
     } catch(e) {
       dispatch(fetchConnectionsFail(e))
@@ -18,7 +20,9 @@ export const fetchConnections = () => {
 export const addConnection = (connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.post('/ligacoes/', connection)
+      const {data} = await api.post('/ligacoes/', connection, {
+        headers: tokenAuth()
+      })
       dispatch(connectionAdded(data))
     } catch(e) {
       console.error(e)
@@ -29,7 +33,9 @@ export const addConnection = (connection) => {
 export const editConnection = (oldId, connection) => {
   return async dispatch => {
     try {
-      const {data} = await api.patch(`/ligacoes/${oldId}/`, connection)
+      const {data} = await api.patch(`/ligacoes/${oldId}/`, connection, {
+        headers: tokenAuth()
+      })
       dispatch(connectionEdited({
         id: oldId,
         data
@@ -43,7 +49,9 @@ export const editConnection = (oldId, connection) => {
 export const deleteConnection = (id) => {
   return async dispatch => {
     try {
-      await api.delete(`/ligacoes/${id}/`)
+      await api.delete(`/ligacoes/${id}/`, {
+        headers: tokenAuth()
+      })
       dispatch(connectionRemoved(id))
     } catch(e) {
       console.error(e)

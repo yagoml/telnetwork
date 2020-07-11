@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { fetchRoute } from '../../../store/ducks/route/fetch-actions'
-import { Form, Row, Col, Button, Spinner } from 'react-bootstrap'
+import { Form, Row, Col, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchPoles } from '../../../store/ducks/poles/fetch-actions'
 import './style.scss'
