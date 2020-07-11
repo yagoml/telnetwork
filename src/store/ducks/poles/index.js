@@ -21,8 +21,11 @@ export default createReducer(initialState, {
 
   [fetchPolesFail.type]: (state) => ({...state, loading: false, error: true }),
 
-  [poleAdded.type]: (state, action) =>
-    ({ ...state, items: [...state.items, ...[action.payload]] }),
+  [poleAdded.type]: (state, action) =>{
+    const items = [...state.items]
+    items.unshift(action.payload)
+    return { ...state, items: items }
+  },
 
   [poleEdited.type]: (state, action) => {
     const item = action.payload.data

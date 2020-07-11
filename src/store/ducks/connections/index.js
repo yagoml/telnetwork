@@ -21,8 +21,11 @@ export default createReducer(initialState, {
 
   [fetchConnectionsFail.type]: (state) => ({...state, loading: false, error: true }),
 
-  [connectionAdded.type]: (state, action) =>
-    ({ ...state, items: [...state.items, ...[action.payload]] }),
+  [connectionAdded.type]: (state, action) =>{
+    const items = [...state.items]
+    items.unshift(action.payload)
+    return { ...state, items: items }
+  },
 
   [connectionEdited.type]: (state, action) => {
     const item = action.payload.data
