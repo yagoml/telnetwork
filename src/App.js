@@ -12,14 +12,14 @@ import {
   Route,
   Redirect
 } from "react-router-dom"
+import { useSelector } from 'react-redux';
 
 export default function App() {
-  const isAuthenticated = () => {
+  const isAuthenticated = useSelector(state => {
     const storedTokens = JSON.parse(localStorage.getItem('telnetwork_tokens'))
     if (!storedTokens) return false
-    const accessToken = storedTokens.access
-    return accessToken !== null
-  }
+    return storedTokens.access !== null
+  })
 
   return (
     <div className="App">
@@ -29,10 +29,10 @@ export default function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <PrivateRoute authed={isAuthenticated()} path='/' component={Home} exact />
-            <PrivateRoute authed={isAuthenticated()} path='/poles' component={Poles} />
-            <PrivateRoute authed={isAuthenticated()} path='/connections' component={Connections} />
-            <PrivateRoute authed={isAuthenticated()} path='/check-route' component={CheckRoute} />
+            <PrivateRoute authed={isAuthenticated} path='/' component={Home} exact />
+            <PrivateRoute authed={isAuthenticated} path='/poles' component={Poles} />
+            <PrivateRoute authed={isAuthenticated} path='/connections' component={Connections} />
+            <PrivateRoute authed={isAuthenticated} path='/check-route' component={CheckRoute} />
           </Switch>
         </Router>
       </Container>

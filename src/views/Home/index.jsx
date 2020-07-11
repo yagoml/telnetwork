@@ -18,10 +18,12 @@ export default function Home() {
     dispatch(fetchConnections())
   }, [dispatch])
 
+  const userName = () => localStorage.getItem('telnetwork_username')
+
   return (
     <div className="home">
       <h3 className="mt-4">
-        Bem vindo <strong>admin</strong>!
+        Bem vindo <strong>{userName()}</strong>!
       </h3>
       <p>Selecione abaixo o que deseja visualizar</p>
       <div className="d-flex mt-4 mb-3">
