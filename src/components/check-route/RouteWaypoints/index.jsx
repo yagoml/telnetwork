@@ -1,15 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, Spinner } from 'react-bootstrap'
 import { ArrowRightShort } from 'react-bootstrap-icons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import './style.scss'
+import { fetchConnections } from './../../../store/ducks/connections/fetch-actions'
 
 export default function RouteWaypoints() {
   const [waypoints, setWaypoints] = useState(null)
+  const [distance, setDistance] = useState(null)
   const routePath = useSelector(state => state.route.path)
   const loading = useSelector(state => state.route.loading)
+  const connections = useSelector(state => state.connections.items)
+  const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(fetchConnections())
+  }, [dispatch])
+
+  useEffect(() => {
+    const getDistance = () => {
+      if (!routePath) return null
+      let distance = 0
+      for (const p of routePath) {
+        const [source, destination] = p.split('-')
+        const connection = connections.find(
+          c =>
+            (c.origem === source && c.destino === destination) ||
+            (c.destino === source && c.origem === destination)
+        )
+        if (!connection) return
+        distance += connection.distancia
+      }
+      return distance.toLocaleString('pt-BR')
+    }
+
     const buildRoute = () => {
       if (!routePath) return null
       const route = []
@@ -20,6 +44,7 @@ export default function RouteWaypoints() {
       }
       return route
     }
+    setDistance(getDistance())
     setWaypoints(buildRoute())
   }, [routePath])
 
@@ -36,6 +61,9 @@ export default function RouteWaypoints() {
           {waypoints.length > 0 ? (
             <>
               <Alert variant="success">Conexão disponível</Alert>
+              <div>
+                Distância total: <strong>{distance}m</strong>
+              </div>
               <div className="d-flex mt-4">
                 {waypoints.map((p, idx) => (
                   <div key={idx}>
