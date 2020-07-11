@@ -58,7 +58,7 @@ export default function Login() {
             </Form.Group>
             <div className="mt-3 text-center">
               <Button variant="primary" type="submit" disabled={loading}>
-                Entrar
+                {!loading ? <span>Entrar</span> : <span>Verificando...</span>}
               </Button>
             </div>
           </Form>
