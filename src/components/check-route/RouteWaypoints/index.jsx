@@ -46,7 +46,7 @@ export default function RouteWaypoints() {
     }
     setDistance(getDistance())
     setWaypoints(buildRoute())
-  }, [routePath])
+  }, [routePath, connections])
 
   return (
     <div className="route-waypoints">

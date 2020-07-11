@@ -27,9 +27,7 @@ export default function CheckRouteForm() {
     const sourceOptions = () => {
       if (!poles.length) return
       const items = []
-      let filtered = poles
-      if (destino.length) filtered = poles.filter(p => p.id !== destino)
-      for (const pole of filtered) {
+      for (const pole of poles) {
         items.push(
           <option value={pole.id} key={pole.id}>
             {pole.id}
@@ -39,7 +37,7 @@ export default function CheckRouteForm() {
       return items
     }
     setSourceOptions(sourceOptions())
-  }, [destino, poles])
+  }, [poles])
 
   useEffect(() => {
     const destinationOptions = () => {
