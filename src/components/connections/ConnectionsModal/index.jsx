@@ -30,10 +30,7 @@ export default function ConnectionsModal({ show, close, connection }) {
     const sourceOptions = () => {
       if (!poles.length) return
       const items = []
-      let filtered = poles
-      if (form.destino.length)
-        filtered = poles.filter(p => p.id !== form.destino)
-      for (const pole of filtered) {
+      for (const pole of poles) {
         items.push(
           <option value={pole.id} key={pole.id}>
             {pole.id}
@@ -43,7 +40,7 @@ export default function ConnectionsModal({ show, close, connection }) {
       return items
     }
     setSourceOptions(sourceOptions())
-  }, [form.destino, poles])
+  }, [poles])
 
   useEffect(() => {
     const destinationOptions = () => {

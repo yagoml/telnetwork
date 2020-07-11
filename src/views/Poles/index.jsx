@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, Breadcrumb } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import PolesModal from '../../components/poles/PolesModal'
 import PolesTable from '../../components/poles/PolesTable'
 import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
 import { fetchConnections } from './../../store/ducks/connections/fetch-actions'
-import { Link } from 'react-router-dom'
+import Breadcrumb from '../../components/BreadCrumb'
 
 export default function Poles() {
   const dispatch = useDispatch()
@@ -43,17 +43,6 @@ export default function Poles() {
     )
   }
 
-  const renderBreadcrumb = () => {
-    return (
-      <Breadcrumb>
-        <Breadcrumb.Item href="#">
-          <Link to="/">Dashboard</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>Postes</Breadcrumb.Item>
-      </Breadcrumb>
-    )
-  }
-
   useEffect(() => {
     dispatch(fetchPoles())
     dispatch(fetchConnections())
@@ -62,7 +51,7 @@ export default function Poles() {
   return (
     <div className="poles">
       <h2>Postes</h2>
-      {renderBreadcrumb()}
+      <Breadcrumb current="Postes" />
       {renderControls()}
       <PolesTable openEditModal={openEditModal} />
       <PolesModal show={show} close={close} pole={edition} />

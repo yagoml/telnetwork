@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchConnections } from '../../store/ducks/connections/fetch-actions'
 import { fetchPoles } from '../../store/ducks/poles/fetch-actions'
-import { Button, Breadcrumb } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import ConnectionsModal from '../../components/connections/ConnectionsModal'
 import ConnectionsTable from '../../components/connections/ConnectionsTable'
-import { Link } from 'react-router-dom'
+import Breadcrumb from '../../components/BreadCrumb'
 
 export default function Connections() {
   const dispatch = useDispatch()
@@ -24,17 +24,6 @@ export default function Connections() {
   const openEditModal = connection => {
     setEdition(connection)
     setShow(true)
-  }
-
-  const renderBreadcrumb = () => {
-    return (
-      <Breadcrumb>
-        <Breadcrumb.Item href="#">
-          <Link to="/">Dashboard</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>Ligações</Breadcrumb.Item>
-      </Breadcrumb>
-    )
   }
 
   useEffect(() => {
@@ -62,7 +51,7 @@ export default function Connections() {
   return (
     <div className="connections">
       <h2>Ligações</h2>
-      {renderBreadcrumb()}
+      <Breadcrumb current="Ligações" />
       {renderControls()}
       <ConnectionsTable openEditModal={openEditModal} />
       <ConnectionsModal show={show} close={close} connection={edition} />
