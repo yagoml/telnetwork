@@ -68,6 +68,7 @@ export default function ConnectionsModal({ show, close, connection }) {
       ? addConnection(form)
       : editConnection(connection.id, form)
     dispatch(action)
+    setForm(emptyForm)
     close()
   }
 

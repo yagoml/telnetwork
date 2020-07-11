@@ -21,6 +21,7 @@ export default function PolesModal({ show, close, pole }) {
   const save = () => {
     const action = !pole ? addPole(form) : editPole(pole.id, form)
     dispatch(action)
+    setForm(emptyForm)
     close()
   }
 
