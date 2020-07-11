@@ -1,0 +1,19 @@
+.app-header {
+  height: 60px;
+  border-bottom: 1px solid white;
+  background-color: slateblue;
+
+  &__link {
+    height: 100%;
+    padding: 0 20px;
+    color: white;
+
+    &.is-active {
+      color: yellow;
+    }
+
+    &:hover {
+      color: yellow;
+    }
+  }
+}

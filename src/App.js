@@ -12,7 +12,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom"
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
+import AppHeader from './components/AppHeader'
 
 export default function App() {
   const isAuthenticated = useSelector(state => {
@@ -23,19 +24,20 @@ export default function App() {
 
   return (
     <div className="App">
-      <Container>
-        <Router>
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <PrivateRoute authed={isAuthenticated} path='/' component={Home} exact />
-            <PrivateRoute authed={isAuthenticated} path='/poles' component={Poles} />
-            <PrivateRoute authed={isAuthenticated} path='/connections' component={Connections} />
-            <PrivateRoute authed={isAuthenticated} path='/check-route' component={CheckRoute} />
-          </Switch>
-        </Router>
-      </Container>
+      <Router>
+        <AppHeader />
+        <Container>
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <PrivateRoute authed={isAuthenticated} path='/' component={Home} exact />
+              <PrivateRoute authed={isAuthenticated} path='/poles' component={Poles} />
+              <PrivateRoute authed={isAuthenticated} path='/connections' component={Connections} />
+              <PrivateRoute authed={isAuthenticated} path='/check-route' component={CheckRoute} />
+            </Switch>
+        </Container>
+      </Router>
     </div>
   )
 }

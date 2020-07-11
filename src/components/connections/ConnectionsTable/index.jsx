@@ -13,7 +13,7 @@ export default function ConnectionsTable({ openEditModal }) {
   const loading = useSelector(state => state.connections.loading)
   const dispatch = useDispatch()
   const [page, setPage] = useState(1)
-  const perPage = 3
+  const perPage = 8
   const totalPages = Math.ceil(connections.length / perPage)
 
   const tryDelete = id => {
