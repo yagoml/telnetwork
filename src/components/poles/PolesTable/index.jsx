@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { deletePole } from '../../../store/ducks/poles/fetch-actions'
-import { Table, Pagination } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Spinner } from 'react-bootstrap'
 import { Trash, PencilSquare } from 'react-bootstrap-icons'
 import { PropTypes } from 'prop-types'
 import './style.scss'
+import Pagination from '../../Pagination'
 
 export default function PolesTable({ openEditModal }) {
   const poles = useSelector(state => state.poles.items)
   const [page, setPage] = useState(1)
   const loading = useSelector(state => state.poles.loading)
   const dispatch = useDispatch()
-  const perPage = 5
+  const perPage = 8
+  const totalPages = Math.ceil(poles.length / perPage)
 
   const tryDelete = id => {
     const confirmation = window.confirm(
@@ -30,24 +32,6 @@ export default function PolesTable({ openEditModal }) {
     return items
   }
 
-  const totalPages = Math.ceil(poles.length / perPage)
-
-  const paginationItems = () => {
-    let items = []
-    for (let number = 1; number <= totalPages; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === page}
-          onClick={() => setPage(number)}
-        >
-          {number}
-        </Pagination.Item>
-      )
-    }
-    return items
-  }
-
   return (
     <div className="poles-table">
       {loading ? (
@@ -61,7 +45,6 @@ export default function PolesTable({ openEditModal }) {
               <tr>
                 <th>ID</th>
                 <th>Tipo</th>
-                <th>Conexões</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -70,7 +53,6 @@ export default function PolesTable({ openEditModal }) {
                 <tr key={pole.id}>
                   <td>{pole.id}</td>
                   <td>{pole.tipo}</td>
-                  <td></td>
                   <td>
                     <Button
                       onClick={() => openEditModal(pole)}
@@ -92,27 +74,7 @@ export default function PolesTable({ openEditModal }) {
             </tbody>
           </Table>
           {totalPages > 1 && (
-            <div className="d-flex justify-content-center mt-3">
-              <Pagination>
-                <Pagination.First
-                  onClick={() => setPage(1)}
-                  disabled={page === 1}
-                />
-                <Pagination.Prev
-                  onClick={() => setPage(page - 1)}
-                  disabled={page === 1}
-                />
-                {paginationItems()}
-                <Pagination.Next
-                  onClick={() => setPage(page + 1)}
-                  disabled={page === totalPages}
-                />
-                <Pagination.Last
-                  onClick={() => setPage(totalPages)}
-                  disabled={page === totalPages}
-                />
-              </Pagination>
-            </div>
+            <Pagination page={page} totalPages={totalPages} setPage={setPage} />
           )}
         </>
       )}
