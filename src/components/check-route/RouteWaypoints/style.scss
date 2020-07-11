@@ -1,8 +1,4 @@
-.check-route {
-  &__btn-search {
-    margin-top: 32px;
-  }
-
+.route-waypoints {
   &__pole-tag {
     padding: 5px 15px;
     border: 1px solid slateblue;
@@ -10,6 +6,11 @@
     color: white;
     border-radius: 30px;
     margin-bottom: 15px;
+  }
+
+  &__loading {
+    height: 50px;
+    color: #0069d9;
   }
 
   .alert {

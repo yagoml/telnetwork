@@ -1,7 +1,7 @@
 import {createAction, createReducer} from '@reduxjs/toolkit'
 
 const initialState = {
-  path: '',
+  path: null,
   loading: false,
   error: false
 }
