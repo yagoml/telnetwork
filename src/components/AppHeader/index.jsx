@@ -29,6 +29,13 @@ export default function AppHeader() {
         >
           Ligações
         </NavLink>
+        <NavLink
+          activeClassName="is-active"
+          to="/check-route"
+          className="app-header__link"
+        >
+          Conectividade
+        </NavLink>
       </Container>
     </div>
   )
