@@ -37,7 +37,7 @@ export default createReducer(initialState, {
 
   [connectionRemoved.type]: (state, action) => {
     const items = [...state.items]
-    const index = items.findIndex(i => i.id === action.payload.id)
+    const index = items.findIndex(i => i.id === action.payload)
     items.splice(index, 1)
     return { ...state, items: items }
   }

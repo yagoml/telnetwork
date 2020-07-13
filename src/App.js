@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux'
 import AppHeader from './components/AppHeader'
 
 export default function App() {
-  const isAuthenticated = useSelector(state => {
+  const isAuthenticated = useSelector(() => {
     const storedTokens = JSON.parse(localStorage.getItem('telnetwork_tokens'))
     if (!storedTokens) return false
     return storedTokens.access !== null
@@ -28,9 +28,7 @@ export default function App() {
         <AppHeader />
         <Container>
             <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
+              <LoginRoute authed={isAuthenticated} path='/login' />
               <PrivateRoute authed={isAuthenticated} path='/' component={Home} exact />
               <PrivateRoute authed={isAuthenticated} path='/poles' component={Poles} />
               <PrivateRoute authed={isAuthenticated} path='/connections' component={Connections} />
@@ -49,6 +47,17 @@ const PrivateRoute = ({component: Component, authed, ...rest}) => {
       render={(props) => authed === true
         ? <Component {...props} />
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+    />
+  )
+}
+
+const LoginRoute = ({authed, ...rest}) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === true
+        ? <Redirect to={{pathname: '/', state: {from: props.location}}} />
+        : <Login />}
     />
   )
 }

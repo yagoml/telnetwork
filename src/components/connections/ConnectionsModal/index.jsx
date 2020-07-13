@@ -21,6 +21,7 @@ export default function ConnectionsModal({ show, close, connection }) {
   const [destinationOptions, setDestinationOptions] = useState([])
   const dispatch = useDispatch()
   const poles = useSelector(state => state.poles.items)
+  const connections = useSelector(state => state.connections.items)
 
   useEffect(() => {
     setForm(connection ? connection : emptyForm)
@@ -61,9 +62,14 @@ export default function ConnectionsModal({ show, close, connection }) {
   }, [form.origem, poles])
 
   const save = () => {
-    const action = !connection
-      ? addConnection(form)
-      : editConnection(connection.id, form)
+    let action
+    if (!connection) {
+      const exists = connections.find(
+        p => p.id.toUpperCase() === form.id.toUpperCase()
+      )
+      if (exists) return window.alert('Já existe uma ligação com esse ID.')
+      action = addConnection(form)
+    } else action = editConnection(connection.id, form)
     dispatch(action)
     setForm(emptyForm)
     close()

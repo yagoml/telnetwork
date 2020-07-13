@@ -6,7 +6,8 @@ const axiosInstance = axios.create({
 
 export const tokenAuth = () => {
   const storedTokens = JSON.parse(localStorage.getItem('telnetwork_tokens'))
-  return storedTokens.access || null
+  if (!storedTokens) return null
+  return storedTokens.access
 }
 
 export const request = async ({type, requestData, headers = {}, path}) => {

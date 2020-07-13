@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { addPole, editPole } from '../../../store/ducks/poles/fetch-actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const emptyForm = {
   id: '',
@@ -13,13 +13,21 @@ export default function PolesModal({ show, close, pole }) {
   const poleTypes = ['madeira', 'concreto']
   const [form, setForm] = useState(emptyForm)
   const dispatch = useDispatch()
+  const poles = useSelector(state => state.poles.items)
 
   useEffect(() => {
     setForm(pole ? pole : emptyForm)
   }, [setForm, pole])
 
   const save = () => {
-    const action = !pole ? addPole(form) : editPole(pole.id, form)
+    let action
+    if (!pole) {
+      const exists = poles.find(
+        p => p.id.toUpperCase() === form.id.toUpperCase()
+      )
+      if (exists) return window.alert('Já existe um poste com esse ID.')
+      action = addPole(form)
+    } else action = editPole(pole.id, form)
     dispatch(action)
     setForm(emptyForm)
     close()

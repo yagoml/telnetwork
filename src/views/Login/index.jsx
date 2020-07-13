@@ -15,7 +15,7 @@ export default function Login() {
   const tryLogin = async e => {
     e.preventDefault()
     setLoading(true)
-    const { data } = await request({
+    const data = await request({
       type: 'post',
       path: '/token/',
       requestData: form
