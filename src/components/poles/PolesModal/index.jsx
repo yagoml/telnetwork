@@ -21,6 +21,8 @@ export default function PolesModal({ show, close, pole }) {
 
   const save = () => {
     let action
+    if (!form.id.length || !form.tipo.length)
+      return window.alert('Por favor, preencha todos os dados obrigatórios.')
     if (!pole) {
       const exists = poles.find(
         p => p.id.toUpperCase() === form.id.toUpperCase()
@@ -41,7 +43,7 @@ export default function PolesModal({ show, close, pole }) {
       <Modal.Body>
         <Form>
           <Form.Group>
-            <Form.Label>ID</Form.Label>
+            <Form.Label>ID *</Form.Label>
             <Form.Control
               type="text"
               placeholder="Ex.: P10"
@@ -50,7 +52,7 @@ export default function PolesModal({ show, close, pole }) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Tipo</Form.Label>
+            <Form.Label>Tipo *</Form.Label>
             <Form.Control
               as="select"
               value={form.tipo}
