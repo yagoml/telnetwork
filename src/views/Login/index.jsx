@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import './style.scss'
 import { useHistory } from 'react-router-dom'
-import api from '../../services/api'
+import { request } from '../../services/api'
 import { fetchLoginSuccess, fetchLoginFail } from '../../store/ducks/login'
 import { useDispatch } from 'react-redux'
 
@@ -14,23 +14,21 @@ export default function Login() {
 
   const tryLogin = async e => {
     e.preventDefault()
-    try {
-      setLoading(true)
-      const { data } = await api.post('/token/', form, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (data && data.access) {
-        localStorage.setItem('telnetwork_tokens', JSON.stringify(data))
-        localStorage.setItem('telnetwork_username', form.username)
-        setLoading(false)
-        dispatch(fetchLoginSuccess(data))
-        history.push('/')
-      }
-    } catch (e) {
+    setLoading(true)
+    const { data } = await request({
+      type: 'post',
+      path: '/token/',
+      requestData: form
+    })
+    if (data && data.access) {
+      localStorage.setItem('telnetwork_tokens', JSON.stringify(data))
+      localStorage.setItem('telnetwork_username', form.username)
+      dispatch(fetchLoginSuccess(data))
       setLoading(false)
+      history.push('/')
+    } else {
       dispatch(fetchLoginFail())
+      setLoading(false)
       window.alert('Credenciais inválidas')
     }
   }
