@@ -46,6 +46,10 @@ export default function RouteWaypoints() {
     }
     setDistance(getDistance())
     setWaypoints(buildRoute())
+    return () => {
+      setWaypoints(null)
+      setDistance(null)
+    }
   }, [routePath, connections])
 
   return (
