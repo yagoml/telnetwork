@@ -63,6 +63,8 @@ export default function ConnectionsModal({ show, close, connection }) {
 
   const save = () => {
     let action
+    if (!checkValidity())
+      return window.alert('Por favor, preencha todos os dados obrigatórios.')
     if (!connection) {
       const exists = connections.find(
         p => p.id.toUpperCase() === form.id.toUpperCase()
@@ -73,6 +75,17 @@ export default function ConnectionsModal({ show, close, connection }) {
     dispatch(action)
     setForm(emptyForm)
     close()
+  }
+
+  const checkValidity = () => {
+    if (
+      !form.id.length ||
+      !form.origem.length ||
+      !form.distancia.length ||
+      !form.destino.length
+    )
+      return false
+    return true
   }
 
   return (
@@ -87,7 +100,7 @@ export default function ConnectionsModal({ show, close, connection }) {
           <Row>
             <Col xs={6}>
               <Form.Group>
-                <Form.Label>ID</Form.Label>
+                <Form.Label>ID *</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ex.: LE5"
@@ -96,7 +109,7 @@ export default function ConnectionsModal({ show, close, connection }) {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Origem</Form.Label>
+                <Form.Label>Origem *</Form.Label>
                 <Form.Control
                   as="select"
                   value={form.origem}
@@ -109,7 +122,7 @@ export default function ConnectionsModal({ show, close, connection }) {
             </Col>
             <Col xs={6}>
               <Form.Group>
-                <Form.Label>Distância</Form.Label>
+                <Form.Label>Distância *</Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Ex.: 10,5"
@@ -121,7 +134,7 @@ export default function ConnectionsModal({ show, close, connection }) {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Destino</Form.Label>
+                <Form.Label>Destino *</Form.Label>
                 <Form.Control
                   as="select"
                   value={form.destino}
