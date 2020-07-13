@@ -10,7 +10,7 @@ export default function CheckRoute() {
 
   useEffect(() => {
     return () => dispatch(resetRoute())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="check-route">
